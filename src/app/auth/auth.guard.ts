@@ -17,8 +17,8 @@ export class AuthGuard implements CanActivate {
 
   canActivate(
     route: ActivatedRouteSnapshot,
-    router: RouterStateSnapshot
-  ):
+    routerState: RouterStateSnapshot
+    ):
     | boolean
     | UrlTree
     | Promise<boolean | UrlTree>
@@ -32,11 +32,7 @@ export class AuthGuard implements CanActivate {
         }
         return this.router.createUrlTree(['/auth']);
       })
-      // tap(isAuth => {
-      //   if (!isAuth) {
-      //     this.router.navigate(['/auth']);
-      //   }
-      // })
     );
   }
 }
+
