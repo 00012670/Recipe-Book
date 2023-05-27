@@ -21,6 +21,7 @@ import { RecipeEditComponent } from './recipes/recipe-edit/recipe-edit.component
 import { AuthComponent } from './auth/auth.component';
 import { AuthInterceptorService } from './auth/auth-interceptor.service';
 import { AuthGuard } from './auth/auth.guard';
+import { RecipiesModule } from './recipes/recipes.module';
 
 
 
@@ -37,14 +38,15 @@ import { AuthGuard } from './auth/auth.guard';
     DropdownDiretive,
     RecipeStartComponent,
     RecipeEditComponent,
-    AuthComponent
+    AuthComponent, 
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
     HttpClientModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    RecipiesModule
   ],
   providers: [ShoppingListService, AuthGuard, RecipeService, {provide: HTTP_INTERCEPTORS, useClass: AuthInterceptorService, multi: true}],
   bootstrap: [AppComponent]
