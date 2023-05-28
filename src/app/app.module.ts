@@ -6,7 +6,7 @@ import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './header/header.component';
-import { DropdownDiretive } from './shared/dropdown.directives';
+import { DropdownDirective } from './shared/dropdown.directive';
 import { ShoppingListService } from './shopping-list/shopping-list.service';
 import { RecipeService } from './recipes/recipe.service';
 import { AppRoutingModule } from './app-routing.module';
@@ -22,7 +22,7 @@ import { ShoppingListModule } from './shopping-list/shopping-list.module';
   declarations: [
     AppComponent,
     HeaderComponent,
-    DropdownDiretive,
+    DropdownDirective,
     AuthComponent, 
   ],
   imports: [
