@@ -1,4 +1,4 @@
-import { Component, ComponentFactoryResolver, ViewChild, OnDestroy } from '@angular/core';
+import { Component, ComponentFactoryResolver, ViewChild, OnDestroy, ViewContainerRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NgForm } from '@angular/forms';
 import { Observable, Subscription } from 'rxjs';
@@ -20,7 +20,10 @@ export class AuthComponent implements OnDestroy {
     @ViewChild(PlaceholderDirective) alertHost!: PlaceholderDirective;
 
     private closeSub!: Subscription;
-    constructor(private authService: AuthService, private routrer: Router, private componentFactoryResolver: ComponentFactoryResolver) {}
+    constructor(
+        private authService: AuthService, 
+        private routrer: Router, 
+        private componentFactoryResolver: ComponentFactoryResolver) {}
 
     onSwitchMode() {
         this.isLoginMode = !this.isLoginMode;
