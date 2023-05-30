@@ -30,13 +30,5 @@ import { SharedModule } from "../shared/shared.module";
         RecipesRoutingModule,
         SharedModule
     ],
-    // exports: [
-    //     RecipesComponent,
-    //     RecipeListComponent,
-    //     RecipeDetailComponent,
-    //     RecipeItemComponent,
-    //     RecipeStartComponent,
-    //     RecipeEditComponent,
-    // ]
 })
 export class RecipiesModule {}

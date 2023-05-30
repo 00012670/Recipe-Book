@@ -134,6 +134,10 @@ export class AuthService {
             break;
     }
     return throwError(errorMessage);
-    }
+  }
+
+  isAuthenticated(): boolean {
+    return !!this.user.value;
+  }
 }
 
