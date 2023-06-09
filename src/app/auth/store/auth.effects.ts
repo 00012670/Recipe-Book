@@ -7,8 +7,7 @@ import { AuthService } from '../auth.service';
 
 import * as AuthActions from './auth.actions';
 import { Injectable } from '@angular/core';
-import { of, Observable } from 'rxjs';
-import { Action } from '@ngrx/store';
+import { of } from 'rxjs';
 import { User } from '../user.model';
 
 export interface AuthResponseData {
@@ -31,7 +30,7 @@ const handleAuthentication = (
     new Date().getTime() + expiresIn * 1000
   );
   const user = new User(email, userId, token, expirationDate);
-  localStorage.setItem('userDate', JSON.stringify(user))
+  localStorage.setItem('userData', JSON.stringify(user))
   return new AuthActions.AuthenticateSuccess({
     email: email,
     userId: userId,
@@ -138,7 +137,6 @@ export class AuthEffects {
           if (authSuccessAction.payload.redirect) {
             this.router.navigate(['/'])
           }
-          this.router.navigate(['/']);
         })
       ),
     { dispatch: false }
@@ -148,7 +146,7 @@ export class AuthEffects {
     this.actions$.pipe(
       ofType(AuthActions.AUTO_LOGIN),
       map(() => {
-        const userDataString = localStorage.getItem('userDate')
+        const userDataString = localStorage.getItem('userData')
         if (!userDataString) {
           return { type: 'DUMMY' };
         }

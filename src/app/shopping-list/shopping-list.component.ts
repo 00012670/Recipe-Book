@@ -4,7 +4,6 @@ import { Subscription, Observable } from 'rxjs';
 
 
 import { Ingredient } from '../shared/ingredient.model';
-import { LoggingService } from '../logging.service';
 import * as fromApp from '../store/app.reducer';
 import * as ShoppingListActions from './store/shopping-list.actions'
 
@@ -20,13 +19,11 @@ export class ShoppingListComponent implements OnInit, OnDestroy {
   private igChangeSub!: Subscription;
 
   constructor(
-    private loggingService: LoggingService,
     private store: Store<fromApp.AppState>
     ) {}
 
   ngOnInit() {
     this.ingredients = this.store.select('shoppingList'); 
-    this.loggingService.printLog('Hello form ShoppingListComponent NgOnInit')
   }
 
   onEditItem(index: number) 
