@@ -21,4 +21,3 @@ export class RecipesResolverService implements Resolve<Recipe[]> {
        }    
     }
 }
-

@@ -2,8 +2,11 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Params, Router } from '@angular/router'
 import { FormGroup, FormControl, FormArray, Validators } from '@angular/forms';
 import { AbstractControl } from '@angular/forms';
+import { Store } from '@ngrx/store';
+import { map } from 'rxjs';
 
 import { RecipeService } from '../recipe.service';
+import * as fromApp from '../../store/app.reducer'
 
 @Component({
   selector: 'app-recipe-edit',
@@ -16,8 +19,10 @@ export class RecipeEditComponent {
   recipeForm!: FormGroup;
 
   constructor(private route: ActivatedRoute,
-              private recipeService: RecipeService,
-              private router: Router) {}
+    private recipeService: RecipeService,
+    private router: Router,
+    private store: Store<fromApp.AppState>
+  ) { }
 
   ngOnInit() {
     this.route.params
@@ -39,14 +44,14 @@ export class RecipeEditComponent {
     this.onCancel();
   }
 
-  onAddIngredient(){
+  onAddIngredient() {
     (<FormArray>this.recipeForm.get('ingredients')).push(
       new FormGroup({
         'name': new FormControl(null, Validators.required),
-        'amount' : new FormControl(null, [
+        'amount': new FormControl(null, [
           Validators.required,
           Validators.pattern(/^[1-9]+[0-9]*$/)
-        ]) 
+        ])
       })
     );
   }
@@ -56,7 +61,7 @@ export class RecipeEditComponent {
   }
 
   onCancel() {
-    this.router.navigate(['../'], {relativeTo: this.route});
+    this.router.navigate(['../'], { relativeTo: this.route });
   }
 
   private initForm() {
@@ -66,33 +71,49 @@ export class RecipeEditComponent {
     let recipeIngredients = new FormArray<FormGroup<{ name: FormControl<string | null>; amount: FormControl<number | null>; }>>([]);
 
     if (this.editMode) {
-      const recipe = this.recipeService.getRecipe(this.id);
-      recipeName = recipe.name;
-      recipeImagePath = recipe.imagePath;
-      recipeDescription = recipe.description;
-      if (recipe['ingredients']) {
-        for (let ingredient of recipe.ingredients) {
-          const ingredientFormGroup = new FormGroup({
-            'name': new FormControl<string | null>(ingredient.name, Validators.required),
-            'amount': new FormControl<number | null>(ingredient.amount, [
-              Validators.required,
-              Validators.pattern(/^[1-9]+[0-9]*$/)
-            ])
-          });
+      // const recipe = this.recipeService.getRecipe(this.id);
+      this.store
+        .select('recipes')
+        .pipe(
+          map(recipeState => {
+            return recipeState.recipes.find((recipe, index) => {
+              return index === this.id;
+            });
+          })
+        )
+        .subscribe(recipe => {
+          if (recipe) {
+            recipeName = recipe.name;
+            recipeImagePath = recipe.imagePath;
+            recipeDescription = recipe.description;
+            if (recipe['ingredients']) {
+              for (let ingredient of recipe.ingredients) {
+                recipeIngredients.push(
+                  new FormGroup({
+                    name: new FormControl(ingredient.name, Validators.required),
+                    amount: new FormControl(ingredient.amount, [
+                      Validators.required,
+                      Validators.pattern(/^[1-9]+[0-9]*$/)
+                    ])
+                  })
+                );
+              }
+            }
+          }
         }
-      }
+      );
     }
 
     this.recipeForm = new FormGroup({
-      'name' : new FormControl(recipeName, Validators.required),
-      'imagePath' : new FormControl(recipeImagePath, Validators.required),
-      'description' : new FormControl(recipeDescription, Validators.required),
-      'ingredients' : recipeIngredients
+      'name': new FormControl(recipeName, Validators.required),
+      'imagePath': new FormControl(recipeImagePath, Validators.required),
+      'description': new FormControl(recipeDescription, Validators.required),
+      'ingredients': recipeIngredients
     })
   }
 
   getIngredientsControls(): AbstractControl[] {
     return (this.recipeForm.get('ingredients') as FormArray)?.controls || [];
   }
-  
+
 }
