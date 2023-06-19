@@ -4,11 +4,11 @@
 The web application allows to create recipes and add ingredients to a shopping list. To get start, users need to register or log in to the application. There is a "Manage" button on the navigation bar where data can be saved and extracted. User can also exit the app by simply clicking the "Logout" button on the nav bar.
 
 #The user interface allows you to:
-##### 1- CREATE,
+##### 1 - CREATE,
 
-##### 2- DELETE,
+##### 2 - DELETE,
 
-##### 3- UPDATE,
+##### 3 - UPDATE,
 
 ##### 4 - VIEW DETAILS
 
