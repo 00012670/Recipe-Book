@@ -1,6 +1,6 @@
-## Recipe Book
+# Recipe Book
 
-# Description
+## Description
 The web application allows to create recipes and add ingredients to a shopping list. To get start, users need to register or log in to the application. There is a "Manage" button on the navigation bar where data can be saved and extracted. User can also exit the app by simply clicking the "Logout" button on the nav bar.
 
 #The user interface allows you to:
@@ -12,7 +12,7 @@ The web application allows to create recipes and add ingredients to a shopping l
 
 ##### 4 - VIEW DETAILS
 
-# AngularApp
+## AngularApp
 
 This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 15.2.6.
 
